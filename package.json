@@ -12,6 +12,6 @@
     "mongodb": "^5.6.0",
     "body-parser": "^1.20.2",
     "node-fetch": "^2.6.7",
-    "weaviate-ts-client": "^3.6.1"
+    "weaviate-ts-client": "^3.4.0"
   }
 }
