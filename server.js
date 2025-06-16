@@ -1,30 +1,33 @@
 const express = require("express");
-const cors = require("cors");
+const path = require("path");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const dotenv = require("dotenv");
-dotenv.config();
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("public")); // Serve frontend files if you move them into a 'public' folder
 
-// Health check route
+// Serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname)));
+
+// Serve index.html on root
 app.get("/", (req, res) => {
-  res.send("✅ Smart Pet Collar server is running!");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Example endpoint (replace or expand as needed)
+// Example backend endpoint
 app.post("/api/emotion", (req, res) => {
-  const { data } = req.body;
-  console.log("Received data:", data);
-  res.json({ message: "Emotion processed successfully!" });
+  const { emotion } = req.body;
+  console.log("Received emotion:", emotion);
+  res.json({ message: `Emotion '${emotion}' saved.` });
 });
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server listening on port ${PORT}`);
-});// Node.js Express server integrating MongoDB, Cohere, Claude, Weaviate
+  console.log(`✅ Smart Pet Collar server running on port ${PORT}`);
+});
